@@ -1,18 +1,20 @@
 // import Routes from "../routes";
 
-import { Route, Routes } from "react-router";
+import { Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
+import Routes from "../routes";
 const routes = {
   path: "/",
   element: <div>Hello world!</div>,
 };
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<h1> hello</h1>} />
-      </Routes>
-    </BrowserRouter>
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route path="/" element={<h1> hello</h1>} />
+    //   </Routes>
+    // </BrowserRouter>
+    <Routes />
   );
 }
 
