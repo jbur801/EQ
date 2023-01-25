@@ -5,40 +5,58 @@ import Lobby from "../components/lobby/Lobby";
 import Game from "../components/thing/Game";
 import {
   createBrowserRouter,
+  createRoutesFromElements,
+  Route,
   RouterProvider,
   useRoutes,
 } from "react-router-dom";
+import Root from "../components/root/Root";
+import CreateLobby from "../components/UserNavigation/CreateLobby";
+import JoinLobby from "../components/UserNavigation/JoinLobby";
 
 export default function Routes() {
-  //   const router = createBrowserRouter(
-  //     createRoutesFromElements(
-  //       <Route path="/" element={<LandingPage />}>
-  //         <Route path="lobby:lobbyCode" element={<Lobby />} />
-  //         <Route path="game:lobbyCode" element={<Game />} />
-  //       </Route>
-  //     )
-  //   );
-  console.log("here i am");
-  //   const router = createBrowserRouter([
-  //     {
-  //       path: "/",
-  //       element: <div>Hello world!</div>,
-  //       //   element: <LandingPage />,
-  //       //   loader: rootLoader,
-  //       //   children: [
-  //       //     {
-  //       //       path: "lobby:lobbyCode",
-  //       //       element: <Lobby />,
-  //       //       //   loader: teamLoader,
-  //       //     },
-  //       //   ],
-  //     },
-  //   ]);
-  const routes = {
-    path: "/",
-    element: <div>Hello world!</div>,
-  };
-  const routing = useRoutes([routes]);
+  // const router = createBrowserRouter(
+  //   createRoutesFromElements(
+  //     <Route path="/" element={<LandingPage />}>
+  //       <Route path="*" element={<h2>xd????</h2>} />
+  //       <Route path="lobby:lobbyCode" element={<Lobby />} />
+  //       <Route path="game:lobbyCode" element={<Game />} />
+  //     </Route>
+  //   )
+  // );
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      // errorElement: <ErrorPage />,
+      children: [
+        {
+          path: "lobby/:lobbyId",
+          element: <Lobby />,
+        },
+        {
+          path: "game/:lobbyId",
+          element: <Game />,
+        },
+        {
+          path: "createlobby",
+          element: <CreateLobby />,
+        },
+        {
+          path: "joinlobby",
+          element: <JoinLobby />,
+        },
+        {
+          index: true,
+          element: <LandingPage />,
+          // element: <h2>testing</h2>,
+        },
+      ],
+    },
+  ]);
+
+  // const routing = useRoutes(routes);
   //   const router = (
   //     <BrowserRouter>
   //       <Route path="/" element={<LandingPage />} />
@@ -46,5 +64,5 @@ export default function Routes() {
   //       <Route path="/game:lobbyCode" element={<Game />} />
   //     </BrowserRouter>
   //   );
-  return routing;
+  return <RouterProvider router={router} />;
 }
