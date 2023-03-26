@@ -13,6 +13,7 @@ import {
 import Root from "../components/root/Root";
 import CreateLobby from "../components/UserNavigation/CreateLobby";
 import JoinLobby from "../components/UserNavigation/JoinLobby";
+import KysPage from "../components/kysPage/KysPage";
 
 export default function Routes() {
   // const router = createBrowserRouter(
@@ -28,6 +29,10 @@ export default function Routes() {
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <KysPage />,
+    },
+    {
+      path: "/1",
       element: <Root />,
       // errorElement: <ErrorPage />,
       children: [
