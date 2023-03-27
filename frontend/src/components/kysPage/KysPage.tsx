@@ -17,6 +17,7 @@ function ColorfulText(props: { text: string }) {
   const callbacks: React.Dispatch<React.SetStateAction<string>>[] = [];
   const states: string[] = [];
   let characters: JSX.Element[] = [];
+  let words: JSX.Element[] = [];
   useInterval(() => {
     if (active) {
       setHue((hue + 10) % 360);
@@ -31,18 +32,42 @@ function ColorfulText(props: { text: string }) {
     let setCallback = (
       callback: React.Dispatch<React.SetStateAction<string>>
     ) => {
-      callbacks[i] = callback;
+      callbacks.push(callback);
     };
     let setState = (state: string) => {
-      states[i] = state;
+      // states[i] = state;
+      states.push(state);
     };
-    let x = CharacterCarousel({
+
+    let character = CharacterCarousel({
       character: text[i],
       setCallback,
       setState,
     });
-    characters.push(x);
+    characters.push(character);
+    if (text[i] === " ") {
+      characters.push(<div style={{ width: 10 }} />);
+      words.push(
+        <div
+          style={{
+            display: "flex",
+          }}
+        >
+          {characters}
+        </div>
+      );
+      characters = [];
+    }
   }
+  words.push(
+    <div
+      style={{
+        display: "flex",
+      }}
+    >
+      {characters}
+    </div>
+  );
   // }, []);
 
   useEffect(() => {
@@ -71,7 +96,7 @@ function ColorfulText(props: { text: string }) {
             justifyContent: "center",
           }}
         >
-          {characters}
+          {words}
         </div>
         <Button onClick={toggleAnimation}> IM A HAPPY BUTTON</Button>
       </Stack>
