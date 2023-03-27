@@ -139,12 +139,14 @@ export default function KysPage() {
     // <Container sx={{ width: "100vw", height: "100vh", bgcolor: "black" }}>
     <div
       style={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
         backgroundColor: "black",
         alignItems: "center",
         justifyContent: "center",
         display: "flex",
+
+        overflow: "hidden",
       }}
     >
       <ColorfulText text="I hope something you love catches on fire" />
