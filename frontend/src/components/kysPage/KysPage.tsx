@@ -16,7 +16,7 @@ function ColorfulText(props: { text: string }) {
   const [active, setActive] = useState(true);
   const callbacks: React.Dispatch<React.SetStateAction<string>>[] = [];
   const states: string[] = [];
-  let characters = [];
+  let characters: JSX.Element[] = [];
   useInterval(() => {
     if (active) {
       setHue((hue + 10) % 360);
@@ -26,21 +26,7 @@ function ColorfulText(props: { text: string }) {
       setColor(interpolateRainbow(hue / 360));
     }
   }, 100);
-
-  useEffect(() => {
-    let max = text.length - 1;
-    if (callbacks.length > 0) {
-      callbacks[0](color);
-      for (let i = 1; i < callbacks.length; i++) {
-        callbacks[i](states[i - 1]);
-      }
-    }
-  }, [color]);
-
-  const toggleAnimation = () => {
-    setActive(!active);
-  };
-
+  // useEffect(() => {
   for (let i = 0; i < text.length; i++) {
     let setCallback = (
       callback: React.Dispatch<React.SetStateAction<string>>
@@ -57,6 +43,21 @@ function ColorfulText(props: { text: string }) {
     });
     characters.push(x);
   }
+  // }, []);
+
+  useEffect(() => {
+    let max = text.length - 1;
+    if (callbacks.length > 0) {
+      callbacks[0](color);
+      for (let i = 1; i < callbacks.length; i++) {
+        callbacks[i](states[i - 1]);
+      }
+    }
+  }, [color]);
+
+  const toggleAnimation = () => {
+    setActive(!active);
+  };
 
   return (
     <>
@@ -64,6 +65,7 @@ function ColorfulText(props: { text: string }) {
         <div
           style={{
             display: "flex",
+            flexWrap: "wrap",
             width: "90%",
             alignItems: "center",
             justifyContent: "center",
