@@ -14,6 +14,8 @@ import Root from "../components/root/Root";
 import CreateLobby from "../components/UserNavigation/CreateLobby";
 import JoinLobby from "../components/UserNavigation/JoinLobby";
 import KysPage from "../components/kysPage/KysPage";
+import { Login } from "../components/Auth/Login";
+import { RequireAuth } from "../components/Auth/RequireAuth";
 
 export default function Routes() {
   // const router = createBrowserRouter(
@@ -32,8 +34,16 @@ export default function Routes() {
       element: <KysPage />,
     },
     {
+      path: "/login",
+      element: <Login />,
+    },
+    {
       path: "/1",
-      element: <Root />,
+      element: (
+        <RequireAuth>
+          <Root />
+        </RequireAuth>
+      ),
       // errorElement: <ErrorPage />,
       children: [
         {
