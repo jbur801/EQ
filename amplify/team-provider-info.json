@@ -14,6 +14,9 @@
     "categories": {
       "auth": {
         "eq444f0f2e2d": {}
+      },
+      "api": {
+        "eq44": {}
       }
     }
   }

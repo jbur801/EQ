@@ -1,0 +1,15 @@
+projects:
+  eq44:
+    schemaPath: frontend/src/graphql/schema.json
+    includes:
+      - frontend/src/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: ''
+        docsFilePath: frontend/src/graphql
+extensions:
+  amplify:
+    version: 3

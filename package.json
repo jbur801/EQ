@@ -2,5 +2,8 @@
   "scripts": {
     "build": "cd frontend && npm run build"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@aws-amplify/ui-react": "^4.0.1",
+    "aws-amplify": "^5.1.2"
+  }
 }

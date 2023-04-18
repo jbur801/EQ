@@ -1,7 +1,6 @@
 // import Routes from "../routes";
 import { Authenticator } from "@aws-amplify/ui-react";
 import Routes from "../routes";
-
 function App() {
   return (
     // <BrowserRouter>
