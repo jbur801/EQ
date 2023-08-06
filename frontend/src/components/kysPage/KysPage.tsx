@@ -1,49 +1,31 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 // import { useSpring, animated } from 'react-spring';
-import { GraphQLResult } from "@aws-amplify/api-graphql";
+
 import { API } from "aws-amplify";
 import { createAwfulPhrase } from "../../graphql/mutations";
-import { listAwfulPhrases } from "../../graphql/queries";
-import ColorfulText from "./ColourfulText";
-import { AwfulPhrase } from "../../models/AwfulPhrase";
+
+import { useAwfulPhraseManager } from "./data/useAwfulPhraseManager";
 
 export default function KysPage() {
-  const [awfulPhrases, setAwfulPhrases] = useState([
-    "I hope you die",
-    "I hope it is painful",
-  ]);
-  const [awfulPhraseText, setAwfulPhraseText] = useState<JSX.Element[]>();
-  const [stringName, setStringName] = useState<String>("");
-  useEffect(() => {
-    async function fetchAwfulPhrases() {
-      const apiData = (await API.graphql({
-        query: listAwfulPhrases,
-      })) as GraphQLResult<any>;
-      const awfulPhrasesFromAPI = apiData.data.listAwfulPhrases
-        .items as AwfulPhrase[];
-      const phraseStrings = awfulPhrasesFromAPI.map((phrase: AwfulPhrase) => {
-        return phrase.phrase;
-      });
-      console.log(phraseStrings);
-      setAwfulPhrases(phraseStrings);
+  const [stringName, setStringName] = useState<string>("");
+
+  const { awfulPhrases, deleteMeanWords, saveAwfulPhrase } =
+    useAwfulPhraseManager();
+
+  const save = () => {
+    if (stringName !== "") {
+      saveAwfulPhrase(stringName);
+      setStringName("");
     }
-    fetchAwfulPhrases();
-  }, []);
+  };
 
-  useEffect(() => {
-    setAwfulPhraseText(
-      awfulPhrases.map((awfulPhrase) => {
-        return <ColorfulText text={awfulPhrase} />;
-      })
-    );
-  }, [awfulPhrases]);
-
-  const saveAwfulPhrase = () => {
-    API.graphql({
-      query: createAwfulPhrase,
-      variables: { input: { phrase: stringName } },
-    });
+  const keyPress = (e: any) => {
+    if (e.keyCode == 13) {
+      console.log("value", e.target.value);
+      // put the login here
+      save();
+    }
   };
 
   return (
@@ -52,28 +34,43 @@ export default function KysPage() {
       style={{
         width: "100%",
         height: "100vh",
-        backgroundColor: "black",
+        backgroundColor: "white",
         alignItems: "center",
         justifyContent: "center",
         display: "flex",
-
+        flexDirection: "column",
         overflow: "hidden",
       }}
+      onKeyDown={keyPress}
     >
-      <Box>{awfulPhraseText}</Box>
+      <Box>
+        {awfulPhrases.map((awfulPhrase) => {
+          return (
+            <div key={awfulPhrase.id}>
+              {/* <ColorfulText text={awfulPhrase.phrase} /> */}
+              <>{awfulPhrase.phrase}</>
+              <Button onClick={() => deleteMeanWords(awfulPhrase)}>
+                {" "}
+                delete
+              </Button>
+            </div>
+          );
+        })}
+      </Box>
       <TextField
         onChange={(e) => {
           let newValue = e.target.value;
 
           setStringName(newValue);
         }}
+        sx={{ background: "white" }}
         value={stringName || ""}
         autoComplete="off"
         fullWidth
         label={"Awful Phrase "}
         variant="outlined"
       />
-      <Button onClick={saveAwfulPhrase}> save ur awful phrase</Button>
+      <Button onClick={save}> save ur awful phrase</Button>
     </div>
 
     // </Container>
