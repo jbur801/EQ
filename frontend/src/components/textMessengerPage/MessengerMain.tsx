@@ -7,29 +7,12 @@ import { AuthenticatedUserContext } from "../Auth/AuthenticatedUserContext";
 import { useContext, useEffect, useState } from "react";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { getUser } from "../../graphql/queries";
+import { API } from "aws-amplify";
+import { useDynamoUser } from "./customHooks/useDynamoUser";
 
 export default function MessengerMain() {
-  const [contextUser, setContextUser] = useState<User>();
-  const { user } = useAuthenticator((context) => [context.user]);
-  //   const get = async(user:any/*AmplifyUser*/)=>{
-  //         const apiData = (await API.graphql({
-  //           query: getUser,
-  //           variables: {input: user}
-  //         })) as GraphQLResult<any>;
-  //         const awfulPhrasesFromAPI = apiData.data.listConversations
-  //           .items as Conversation[];
-  //         console.log("convoRawResult", apiData);
-  //         const convoNames = awfulPhrasesFromAPI.map((conversation: Conversation) => {
-  //           return conversation.name;
-  //         });
-  //         console.log("found conversations:", convoNames);
-  //         setConversations(awfulPhrasesFromAPI);
+  const { user: contextUser } = useDynamoUser();
 
-  //   }
-  useEffect(() => {
-    console.log(user);
-    // get(user)
-  }, [user]);
   const {
     conversations,
     selectedConversation,

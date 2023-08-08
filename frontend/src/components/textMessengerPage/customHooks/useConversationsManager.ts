@@ -1,30 +1,17 @@
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import { API, graphqlOperation } from "aws-amplify";
 import { useEffect, useState } from "react";
 import {
-  awfulPhrasesByConversationID,
-  conversationUsersByUserId,
-  listAwfulPhrases,
-} from "../../../graphql/queries";
-import { API, graphqlOperation } from "aws-amplify";
-import { GraphQLSubscription } from "@aws-amplify/api";
-import {
-  createAwfulPhrase,
-  createConversation,
-  createConversationUser,
-  deleteAwfulPhrase,
-  deleteConversation,
-} from "../../../graphql/mutations";
-import { onCreateAwfulPhrase } from "../../../graphql/subscriptions";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
-import {
-  AwfulPhrase,
-  AwfulPhrasesByConversationIDQuery,
   Conversation,
-  CreateAwfulPhraseInput,
   CreateConversationInput,
   CreateConversationUserInput,
-  OnCreateAwfulPhraseSubscription,
   User,
 } from "../../../API";
+import {
+  createConversation,
+  deleteConversation,
+} from "../../../graphql/mutations";
+import { conversationUsersByUserId } from "../../../graphql/queries";
 
 /**
  * custom hook designed to manage conversations which users are a part of
@@ -49,12 +36,13 @@ export const useConversationsManager = (user: User | undefined) => {
   //TODO
   const [invites, setInvites] = useState<any>();
   useEffect(() => {
-    async function fetchConversations() {
-      const apiData = (await API.graphql({
-        query: conversationUsersByUserId,
-        variables: { input: user },
-      })) as GraphQLResult<any>;
-      const awfulPhrasesFromAPI = apiData.data.listConversations
+    async function fetchConversations(user: User) {
+      const apiData = (await API.graphql(
+        graphqlOperation(conversationUsersByUserId, {
+          userId: user.id,
+        })
+      )) as GraphQLResult<any>;
+      const awfulPhrasesFromAPI = apiData.data.conversationUsersByUserId
         .items as Conversation[];
       console.log("convoRawResult", apiData);
       const convoNames = awfulPhrasesFromAPI.map(
@@ -78,7 +66,7 @@ export const useConversationsManager = (user: User | undefined) => {
     //   error: (error) => console.warn(error),
     // });
     if (user) {
-      fetchConversations();
+      fetchConversations(user);
     }
 
     // return () => sub.unsubscribe();

@@ -23,7 +23,7 @@ export const ConversationSelector: React.FC<conversationSelectorProps> = (
     setNewConvoName("");
   };
   return (
-    <Card sx={{ width: "100%", height: "100%" }}>
+    <Card sx={{ width: "100%", height: "80vh" }}>
       <Stack>
         {conversations.map((convo) => {
           return (
@@ -32,7 +32,7 @@ export const ConversationSelector: React.FC<conversationSelectorProps> = (
             </Box>
           );
         })}
-        <Button>
+        <Button onClick={() => setShowModal(true)}>
           <h1>+</h1>
         </Button>
       </Stack>
