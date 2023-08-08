@@ -2,43 +2,115 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createNote = /* GraphQL */ `
-  mutation CreateNote(
-    $input: CreateNoteInput!
-    $condition: ModelNoteConditionInput
+export const createConversation = /* GraphQL */ `
+  mutation CreateConversation(
+    $input: CreateConversationInput!
+    $condition: ModelConversationConditionInput
   ) {
-    createNote(input: $input, condition: $condition) {
+    createConversation(input: $input, condition: $condition) {
       id
       name
-      description
+      AwfulPhrases {
+        nextToken
+      }
+      Users {
+        nextToken
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const updateNote = /* GraphQL */ `
-  mutation UpdateNote(
-    $input: UpdateNoteInput!
-    $condition: ModelNoteConditionInput
+export const updateConversation = /* GraphQL */ `
+  mutation UpdateConversation(
+    $input: UpdateConversationInput!
+    $condition: ModelConversationConditionInput
   ) {
-    updateNote(input: $input, condition: $condition) {
+    updateConversation(input: $input, condition: $condition) {
       id
       name
-      description
+      AwfulPhrases {
+        nextToken
+      }
+      Users {
+        nextToken
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteNote = /* GraphQL */ `
-  mutation DeleteNote(
-    $input: DeleteNoteInput!
-    $condition: ModelNoteConditionInput
+export const deleteConversation = /* GraphQL */ `
+  mutation DeleteConversation(
+    $input: DeleteConversationInput!
+    $condition: ModelConversationConditionInput
   ) {
-    deleteNote(input: $input, condition: $condition) {
+    deleteConversation(input: $input, condition: $condition) {
       id
       name
-      description
+      AwfulPhrases {
+        nextToken
+      }
+      Users {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      id
+      username
+      AwfulPhrases {
+        nextToken
+      }
+      conversations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      username
+      AwfulPhrases {
+        nextToken
+      }
+      conversations {
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      username
+      AwfulPhrases {
+        nextToken
+      }
+      conversations {
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -52,6 +124,9 @@ export const createAwfulPhrase = /* GraphQL */ `
     createAwfulPhrase(input: $input, condition: $condition) {
       id
       phrase
+      userID
+      conversationID
+      type
       createdAt
       updatedAt
     }
@@ -65,6 +140,9 @@ export const updateAwfulPhrase = /* GraphQL */ `
     updateAwfulPhrase(input: $input, condition: $condition) {
       id
       phrase
+      userID
+      conversationID
+      type
       createdAt
       updatedAt
     }
@@ -78,6 +156,9 @@ export const deleteAwfulPhrase = /* GraphQL */ `
     deleteAwfulPhrase(input: $input, condition: $condition) {
       id
       phrase
+      userID
+      conversationID
+      type
       createdAt
       updatedAt
     }
@@ -117,6 +198,84 @@ export const deleteNicePhrase = /* GraphQL */ `
     deleteNicePhrase(input: $input, condition: $condition) {
       id
       phrase
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createConversationUser = /* GraphQL */ `
+  mutation CreateConversationUser(
+    $input: CreateConversationUserInput!
+    $condition: ModelConversationUserConditionInput
+  ) {
+    createConversationUser(input: $input, condition: $condition) {
+      id
+      conversationId
+      userId
+      conversation {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateConversationUser = /* GraphQL */ `
+  mutation UpdateConversationUser(
+    $input: UpdateConversationUserInput!
+    $condition: ModelConversationUserConditionInput
+  ) {
+    updateConversationUser(input: $input, condition: $condition) {
+      id
+      conversationId
+      userId
+      conversation {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteConversationUser = /* GraphQL */ `
+  mutation DeleteConversationUser(
+    $input: DeleteConversationUserInput!
+    $condition: ModelConversationUserConditionInput
+  ) {
+    deleteConversationUser(input: $input, condition: $condition) {
+      id
+      conversationId
+      userId
+      conversation {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        username
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

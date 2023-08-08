@@ -17,6 +17,12 @@
       },
       "api": {
         "eq44": {}
+      },
+      "function": {
+        "addUserToDatabase": {
+          "deploymentBucketName": "amplify-amplifyb406e755c4454-staging-51206-deployment",
+          "s3Key": "amplify-builds/addUserToDatabase-653547497465365a4b50-build.zip"
+        }
       }
     }
   }

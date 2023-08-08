@@ -17,6 +17,8 @@ type AwfulPhrase @model @auth(rules: [{allow: public}]) {
   phrase: String!
   userID: ID! @index(name: "byUser")
   conversationID: ID! @index(name: "byConversation")
+  type: String! @index(name: "awfulPhrasesByDate", queryField: "awfulPhrasesByDate", sortKeyFields: ["createdAt"])
+  createdAt: String!
 }
 
 type nicePhrase @model @auth(rules: [{allow: public}]) {

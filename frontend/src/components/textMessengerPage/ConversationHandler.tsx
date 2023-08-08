@@ -2,15 +2,25 @@ import { Box, Button, TextField } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
 // import { useSpring, animated } from 'react-spring';
 
-import { useAwfulPhraseManager } from "../textMessengerPage/customHooks/useAwfulPhraseManager";
+import { useAwfulPhraseManager } from "./customHooks/useAwfulPhraseManager";
 import { AuthenticatedUserContext } from "../Auth/AuthenticatedUserContext";
+import { User, Conversation } from "../../API";
 
-export default function KysPage() {
+interface conversationHandlerProps {
+  conversation: Conversation;
+  conversationUsers: User[];
+  contextUser: User;
+}
+
+export const ConversationHandler: React.FC<conversationHandlerProps> = (
+  props
+) => {
+  const { conversation, conversationUsers, contextUser } = props;
+
   const [stringName, setStringName] = useState<string>("");
-  const user = undefined;
-  const conversation = undefined;
+
   const { awfulPhrases, deleteMeanWords, saveAwfulPhrase } =
-    useAwfulPhraseManager(user, conversation);
+    useAwfulPhraseManager(contextUser, conversation);
 
   const save = () => {
     if (stringName !== "") {
@@ -32,8 +42,8 @@ export default function KysPage() {
     <div
       style={{
         width: "100%",
-        height: "100vh",
-        backgroundColor: "white",
+        height: "100%",
+        backgroundColor: "grey",
         alignItems: "center",
         justifyContent: "center",
         display: "flex",
@@ -46,7 +56,6 @@ export default function KysPage() {
         {awfulPhrases.map((awfulPhrase) => {
           return (
             <div key={awfulPhrase.id}>
-              {/* <ColorfulText text={awfulPhrase.phrase} /> */}
               <>{awfulPhrase.phrase}</>
               <Button onClick={() => deleteMeanWords(awfulPhrase)}>
                 {" "}
@@ -74,4 +83,4 @@ export default function KysPage() {
 
     // </Container>
   );
-}
+};

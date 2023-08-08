@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "api": {
+      "eq44": [
+        "Query",
+        "Mutation"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

@@ -16,6 +16,7 @@ import JoinLobby from "../components/UserNavigation/JoinLobby";
 import KysPage from "../components/kysPage/KysPage";
 import { Login } from "../components/Auth/Login";
 import { RequireAuth } from "../components/Auth/RequireAuth";
+import MessengerMain from "../components/textMessengerPage/MessengerMain";
 
 export default function Routes() {
   // const router = createBrowserRouter(
@@ -29,16 +30,16 @@ export default function Routes() {
   // );
 
   const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <KysPage />,
-    },
+    // {
+    //   path: "/",
+    //   element: <KysPage />,
+    // },
     {
       path: "/login",
       element: <Login />,
     },
     {
-      path: "/1",
+      path: "/",
       element: (
         <RequireAuth>
           <Root />
@@ -64,7 +65,8 @@ export default function Routes() {
         },
         {
           index: true,
-          element: <LandingPage />,
+          // element: <LandingPage />,
+          element: <MessengerMain />,
           // element: <h2>testing</h2>,
         },
       ],

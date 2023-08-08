@@ -2,18 +2,16 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateNoteInput = {
+export type CreateConversationInput = {
   id?: string | null,
-  name: string,
-  description?: string | null,
+  name?: string | null,
 };
 
-export type ModelNoteConditionInput = {
+export type ModelConversationConditionInput = {
   name?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  and?: Array< ModelNoteConditionInput | null > | null,
-  or?: Array< ModelNoteConditionInput | null > | null,
-  not?: ModelNoteConditionInput | null,
+  and?: Array< ModelConversationConditionInput | null > | null,
+  or?: Array< ModelConversationConditionInput | null > | null,
+  not?: ModelConversationConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -56,48 +54,133 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type Note = {
-  __typename: "Note",
+export type Conversation = {
+  __typename: "Conversation",
   id: string,
-  name: string,
-  description?: string | null,
+  name?: string | null,
+  AwfulPhrases?: ModelAwfulPhraseConnection | null,
+  Users?: ModelConversationUserConnection | null,
   createdAt: string,
   updatedAt: string,
 };
 
-export type UpdateNoteInput = {
-  id: string,
-  name?: string | null,
-  description?: string | null,
-};
-
-export type DeleteNoteInput = {
-  id: string,
-};
-
-export type CreateAwfulPhraseInput = {
-  id?: string | null,
-  phrase: string,
-};
-
-export type ModelAwfulPhraseConditionInput = {
-  phrase?: ModelStringInput | null,
-  and?: Array< ModelAwfulPhraseConditionInput | null > | null,
-  or?: Array< ModelAwfulPhraseConditionInput | null > | null,
-  not?: ModelAwfulPhraseConditionInput | null,
+export type ModelAwfulPhraseConnection = {
+  __typename: "ModelAwfulPhraseConnection",
+  items:  Array<AwfulPhrase | null >,
+  nextToken?: string | null,
 };
 
 export type AwfulPhrase = {
   __typename: "AwfulPhrase",
   id: string,
   phrase: string,
+  userID: string,
+  conversationID: string,
+  type: string,
   createdAt: string,
   updatedAt: string,
+};
+
+export type ModelConversationUserConnection = {
+  __typename: "ModelConversationUserConnection",
+  items:  Array<ConversationUser | null >,
+  nextToken?: string | null,
+};
+
+export type ConversationUser = {
+  __typename: "ConversationUser",
+  id: string,
+  conversationId: string,
+  userId: string,
+  conversation: Conversation,
+  user: User,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type User = {
+  __typename: "User",
+  id: string,
+  username?: string | null,
+  AwfulPhrases?: ModelAwfulPhraseConnection | null,
+  conversations?: ModelConversationUserConnection | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateConversationInput = {
+  id: string,
+  name?: string | null,
+};
+
+export type DeleteConversationInput = {
+  id: string,
+};
+
+export type CreateUserInput = {
+  id?: string | null,
+  username?: string | null,
+};
+
+export type ModelUserConditionInput = {
+  username?: ModelStringInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
+};
+
+export type UpdateUserInput = {
+  id: string,
+  username?: string | null,
+};
+
+export type DeleteUserInput = {
+  id: string,
+};
+
+export type CreateAwfulPhraseInput = {
+  id?: string | null,
+  phrase: string,
+  userID: string,
+  conversationID: string,
+  type: string,
+  createdAt?: string | null,
+};
+
+export type ModelAwfulPhraseConditionInput = {
+  phrase?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
+  conversationID?: ModelIDInput | null,
+  type?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  and?: Array< ModelAwfulPhraseConditionInput | null > | null,
+  or?: Array< ModelAwfulPhraseConditionInput | null > | null,
+  not?: ModelAwfulPhraseConditionInput | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
 };
 
 export type UpdateAwfulPhraseInput = {
   id: string,
   phrase?: string | null,
+  userID?: string | null,
+  conversationID?: string | null,
+  type?: string | null,
+  createdAt?: string | null,
 };
 
 export type DeleteAwfulPhraseInput = {
@@ -133,49 +216,84 @@ export type DeleteNicePhraseInput = {
   id: string,
 };
 
-export type ModelNoteFilterInput = {
+export type CreateConversationUserInput = {
+  id?: string | null,
+  conversationId: string,
+  userId: string,
+};
+
+export type ModelConversationUserConditionInput = {
+  conversationId?: ModelIDInput | null,
+  userId?: ModelIDInput | null,
+  and?: Array< ModelConversationUserConditionInput | null > | null,
+  or?: Array< ModelConversationUserConditionInput | null > | null,
+  not?: ModelConversationUserConditionInput | null,
+};
+
+export type UpdateConversationUserInput = {
+  id: string,
+  conversationId?: string | null,
+  userId?: string | null,
+};
+
+export type DeleteConversationUserInput = {
+  id: string,
+};
+
+export type ModelConversationFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  and?: Array< ModelNoteFilterInput | null > | null,
-  or?: Array< ModelNoteFilterInput | null > | null,
-  not?: ModelNoteFilterInput | null,
+  and?: Array< ModelConversationFilterInput | null > | null,
+  or?: Array< ModelConversationFilterInput | null > | null,
+  not?: ModelConversationFilterInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
+export type ModelConversationConnection = {
+  __typename: "ModelConversationConnection",
+  items:  Array<Conversation | null >,
+  nextToken?: string | null,
 };
 
-export type ModelNoteConnection = {
-  __typename: "ModelNoteConnection",
-  items:  Array<Note | null >,
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
+  username?: ModelStringInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
+};
+
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection",
+  items:  Array<User | null >,
   nextToken?: string | null,
 };
 
 export type ModelAwfulPhraseFilterInput = {
   id?: ModelIDInput | null,
   phrase?: ModelStringInput | null,
+  userID?: ModelIDInput | null,
+  conversationID?: ModelIDInput | null,
+  type?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelAwfulPhraseFilterInput | null > | null,
   or?: Array< ModelAwfulPhraseFilterInput | null > | null,
   not?: ModelAwfulPhraseFilterInput | null,
 };
 
-export type ModelAwfulPhraseConnection = {
-  __typename: "ModelAwfulPhraseConnection",
-  items:  Array<AwfulPhrase | null >,
-  nextToken?: string | null,
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
 };
 
 export type ModelNicePhraseFilterInput = {
@@ -192,12 +310,20 @@ export type ModelNicePhraseConnection = {
   nextToken?: string | null,
 };
 
-export type ModelSubscriptionNoteFilterInput = {
+export type ModelConversationUserFilterInput = {
+  id?: ModelIDInput | null,
+  conversationId?: ModelIDInput | null,
+  userId?: ModelIDInput | null,
+  and?: Array< ModelConversationUserFilterInput | null > | null,
+  or?: Array< ModelConversationUserFilterInput | null > | null,
+  not?: ModelConversationUserFilterInput | null,
+};
+
+export type ModelSubscriptionConversationFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
-  description?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionNoteFilterInput | null > | null,
-  or?: Array< ModelSubscriptionNoteFilterInput | null > | null,
+  and?: Array< ModelSubscriptionConversationFilterInput | null > | null,
+  or?: Array< ModelSubscriptionConversationFilterInput | null > | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -230,9 +356,20 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
+export type ModelSubscriptionUserFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  username?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionUserFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserFilterInput | null > | null,
+};
+
 export type ModelSubscriptionAwfulPhraseFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   phrase?: ModelSubscriptionStringInput | null,
+  userID?: ModelSubscriptionIDInput | null,
+  conversationID?: ModelSubscriptionIDInput | null,
+  type?: ModelSubscriptionStringInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionAwfulPhraseFilterInput | null > | null,
   or?: Array< ModelSubscriptionAwfulPhraseFilterInput | null > | null,
 };
@@ -244,49 +381,147 @@ export type ModelSubscriptionNicePhraseFilterInput = {
   or?: Array< ModelSubscriptionNicePhraseFilterInput | null > | null,
 };
 
-export type CreateNoteMutationVariables = {
-  input: CreateNoteInput,
-  condition?: ModelNoteConditionInput | null,
+export type ModelSubscriptionConversationUserFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  conversationId?: ModelSubscriptionIDInput | null,
+  userId?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionConversationUserFilterInput | null > | null,
+  or?: Array< ModelSubscriptionConversationUserFilterInput | null > | null,
 };
 
-export type CreateNoteMutation = {
-  createNote?:  {
-    __typename: "Note",
+export type CreateConversationMutationVariables = {
+  input: CreateConversationInput,
+  condition?: ModelConversationConditionInput | null,
+};
+
+export type CreateConversationMutation = {
+  createConversation?:  {
+    __typename: "Conversation",
     id: string,
-    name: string,
-    description?: string | null,
+    name?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    Users?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type UpdateNoteMutationVariables = {
-  input: UpdateNoteInput,
-  condition?: ModelNoteConditionInput | null,
+export type UpdateConversationMutationVariables = {
+  input: UpdateConversationInput,
+  condition?: ModelConversationConditionInput | null,
 };
 
-export type UpdateNoteMutation = {
-  updateNote?:  {
-    __typename: "Note",
+export type UpdateConversationMutation = {
+  updateConversation?:  {
+    __typename: "Conversation",
     id: string,
-    name: string,
-    description?: string | null,
+    name?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    Users?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type DeleteNoteMutationVariables = {
-  input: DeleteNoteInput,
-  condition?: ModelNoteConditionInput | null,
+export type DeleteConversationMutationVariables = {
+  input: DeleteConversationInput,
+  condition?: ModelConversationConditionInput | null,
 };
 
-export type DeleteNoteMutation = {
-  deleteNote?:  {
-    __typename: "Note",
+export type DeleteConversationMutation = {
+  deleteConversation?:  {
+    __typename: "Conversation",
     id: string,
-    name: string,
-    description?: string | null,
+    name?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    Users?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateUserMutationVariables = {
+  input: CreateUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type CreateUserMutation = {
+  createUser?:  {
+    __typename: "User",
+    id: string,
+    username?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    conversations?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateUserMutationVariables = {
+  input: UpdateUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type UpdateUserMutation = {
+  updateUser?:  {
+    __typename: "User",
+    id: string,
+    username?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    conversations?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteUserMutationVariables = {
+  input: DeleteUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type DeleteUserMutation = {
+  deleteUser?:  {
+    __typename: "User",
+    id: string,
+    username?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    conversations?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -302,6 +537,9 @@ export type CreateAwfulPhraseMutation = {
     __typename: "AwfulPhrase",
     id: string,
     phrase: string,
+    userID: string,
+    conversationID: string,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -317,6 +555,9 @@ export type UpdateAwfulPhraseMutation = {
     __typename: "AwfulPhrase",
     id: string,
     phrase: string,
+    userID: string,
+    conversationID: string,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -332,6 +573,9 @@ export type DeleteAwfulPhraseMutation = {
     __typename: "AwfulPhrase",
     id: string,
     phrase: string,
+    userID: string,
+    conversationID: string,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -382,35 +626,173 @@ export type DeleteNicePhraseMutation = {
   } | null,
 };
 
-export type GetNoteQueryVariables = {
-  id: string,
+export type CreateConversationUserMutationVariables = {
+  input: CreateConversationUserInput,
+  condition?: ModelConversationUserConditionInput | null,
 };
 
-export type GetNoteQuery = {
-  getNote?:  {
-    __typename: "Note",
+export type CreateConversationUserMutation = {
+  createConversationUser?:  {
+    __typename: "ConversationUser",
     id: string,
-    name: string,
-    description?: string | null,
+    conversationId: string,
+    userId: string,
+    conversation:  {
+      __typename: "Conversation",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    user:  {
+      __typename: "User",
+      id: string,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type ListNotesQueryVariables = {
-  filter?: ModelNoteFilterInput | null,
+export type UpdateConversationUserMutationVariables = {
+  input: UpdateConversationUserInput,
+  condition?: ModelConversationUserConditionInput | null,
+};
+
+export type UpdateConversationUserMutation = {
+  updateConversationUser?:  {
+    __typename: "ConversationUser",
+    id: string,
+    conversationId: string,
+    userId: string,
+    conversation:  {
+      __typename: "Conversation",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    user:  {
+      __typename: "User",
+      id: string,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteConversationUserMutationVariables = {
+  input: DeleteConversationUserInput,
+  condition?: ModelConversationUserConditionInput | null,
+};
+
+export type DeleteConversationUserMutation = {
+  deleteConversationUser?:  {
+    __typename: "ConversationUser",
+    id: string,
+    conversationId: string,
+    userId: string,
+    conversation:  {
+      __typename: "Conversation",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    user:  {
+      __typename: "User",
+      id: string,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type GetConversationQueryVariables = {
+  id: string,
+};
+
+export type GetConversationQuery = {
+  getConversation?:  {
+    __typename: "Conversation",
+    id: string,
+    name?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    Users?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListConversationsQueryVariables = {
+  filter?: ModelConversationFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListNotesQuery = {
-  listNotes?:  {
-    __typename: "ModelNoteConnection",
+export type ListConversationsQuery = {
+  listConversations?:  {
+    __typename: "ModelConversationConnection",
     items:  Array< {
-      __typename: "Note",
+      __typename: "Conversation",
       id: string,
-      name: string,
-      description?: string | null,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetUserQueryVariables = {
+  id: string,
+};
+
+export type GetUserQuery = {
+  getUser?:  {
+    __typename: "User",
+    id: string,
+    username?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    conversations?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUsersQuery = {
+  listUsers?:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      username?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -427,6 +809,9 @@ export type GetAwfulPhraseQuery = {
     __typename: "AwfulPhrase",
     id: string,
     phrase: string,
+    userID: string,
+    conversationID: string,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -445,6 +830,85 @@ export type ListAwfulPhrasesQuery = {
       __typename: "AwfulPhrase",
       id: string,
       phrase: string,
+      userID: string,
+      conversationID: string,
+      type: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type AwfulPhrasesByUserIDQueryVariables = {
+  userID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelAwfulPhraseFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type AwfulPhrasesByUserIDQuery = {
+  awfulPhrasesByUserID?:  {
+    __typename: "ModelAwfulPhraseConnection",
+    items:  Array< {
+      __typename: "AwfulPhrase",
+      id: string,
+      phrase: string,
+      userID: string,
+      conversationID: string,
+      type: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type AwfulPhrasesByConversationIDQueryVariables = {
+  conversationID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelAwfulPhraseFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type AwfulPhrasesByConversationIDQuery = {
+  awfulPhrasesByConversationID?:  {
+    __typename: "ModelAwfulPhraseConnection",
+    items:  Array< {
+      __typename: "AwfulPhrase",
+      id: string,
+      phrase: string,
+      userID: string,
+      conversationID: string,
+      type: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type AwfulPhrasesByDateQueryVariables = {
+  type: string,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelAwfulPhraseFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type AwfulPhrasesByDateQuery = {
+  awfulPhrasesByDate?:  {
+    __typename: "ModelAwfulPhraseConnection",
+    items:  Array< {
+      __typename: "AwfulPhrase",
+      id: string,
+      phrase: string,
+      userID: string,
+      conversationID: string,
+      type: string,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -486,46 +950,229 @@ export type ListNicePhrasesQuery = {
   } | null,
 };
 
-export type OnCreateNoteSubscriptionVariables = {
-  filter?: ModelSubscriptionNoteFilterInput | null,
+export type GetConversationUserQueryVariables = {
+  id: string,
 };
 
-export type OnCreateNoteSubscription = {
-  onCreateNote?:  {
-    __typename: "Note",
+export type GetConversationUserQuery = {
+  getConversationUser?:  {
+    __typename: "ConversationUser",
     id: string,
-    name: string,
-    description?: string | null,
+    conversationId: string,
+    userId: string,
+    conversation:  {
+      __typename: "Conversation",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    user:  {
+      __typename: "User",
+      id: string,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnUpdateNoteSubscriptionVariables = {
-  filter?: ModelSubscriptionNoteFilterInput | null,
+export type ListConversationUsersQueryVariables = {
+  filter?: ModelConversationUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
 };
 
-export type OnUpdateNoteSubscription = {
-  onUpdateNote?:  {
-    __typename: "Note",
+export type ListConversationUsersQuery = {
+  listConversationUsers?:  {
+    __typename: "ModelConversationUserConnection",
+    items:  Array< {
+      __typename: "ConversationUser",
+      id: string,
+      conversationId: string,
+      userId: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ConversationUsersByConversationIdQueryVariables = {
+  conversationId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelConversationUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ConversationUsersByConversationIdQuery = {
+  conversationUsersByConversationId?:  {
+    __typename: "ModelConversationUserConnection",
+    items:  Array< {
+      __typename: "ConversationUser",
+      id: string,
+      conversationId: string,
+      userId: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ConversationUsersByUserIdQueryVariables = {
+  userId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelConversationUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ConversationUsersByUserIdQuery = {
+  conversationUsersByUserId?:  {
+    __typename: "ModelConversationUserConnection",
+    items:  Array< {
+      __typename: "ConversationUser",
+      id: string,
+      conversationId: string,
+      userId: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateConversationSubscriptionVariables = {
+  filter?: ModelSubscriptionConversationFilterInput | null,
+};
+
+export type OnCreateConversationSubscription = {
+  onCreateConversation?:  {
+    __typename: "Conversation",
     id: string,
-    name: string,
-    description?: string | null,
+    name?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    Users?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type OnDeleteNoteSubscriptionVariables = {
-  filter?: ModelSubscriptionNoteFilterInput | null,
+export type OnUpdateConversationSubscriptionVariables = {
+  filter?: ModelSubscriptionConversationFilterInput | null,
 };
 
-export type OnDeleteNoteSubscription = {
-  onDeleteNote?:  {
-    __typename: "Note",
+export type OnUpdateConversationSubscription = {
+  onUpdateConversation?:  {
+    __typename: "Conversation",
     id: string,
-    name: string,
-    description?: string | null,
+    name?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    Users?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteConversationSubscriptionVariables = {
+  filter?: ModelSubscriptionConversationFilterInput | null,
+};
+
+export type OnDeleteConversationSubscription = {
+  onDeleteConversation?:  {
+    __typename: "Conversation",
+    id: string,
+    name?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    Users?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+};
+
+export type OnCreateUserSubscription = {
+  onCreateUser?:  {
+    __typename: "User",
+    id: string,
+    username?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    conversations?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+};
+
+export type OnUpdateUserSubscription = {
+  onUpdateUser?:  {
+    __typename: "User",
+    id: string,
+    username?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    conversations?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteUserSubscriptionVariables = {
+  filter?: ModelSubscriptionUserFilterInput | null,
+};
+
+export type OnDeleteUserSubscription = {
+  onDeleteUser?:  {
+    __typename: "User",
+    id: string,
+    username?: string | null,
+    AwfulPhrases?:  {
+      __typename: "ModelAwfulPhraseConnection",
+      nextToken?: string | null,
+    } | null,
+    conversations?:  {
+      __typename: "ModelConversationUserConnection",
+      nextToken?: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -540,6 +1187,9 @@ export type OnCreateAwfulPhraseSubscription = {
     __typename: "AwfulPhrase",
     id: string,
     phrase: string,
+    userID: string,
+    conversationID: string,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -554,6 +1204,9 @@ export type OnUpdateAwfulPhraseSubscription = {
     __typename: "AwfulPhrase",
     id: string,
     phrase: string,
+    userID: string,
+    conversationID: string,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -568,6 +1221,9 @@ export type OnDeleteAwfulPhraseSubscription = {
     __typename: "AwfulPhrase",
     id: string,
     phrase: string,
+    userID: string,
+    conversationID: string,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -610,6 +1266,93 @@ export type OnDeleteNicePhraseSubscription = {
     __typename: "nicePhrase",
     id: string,
     phrase: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateConversationUserSubscriptionVariables = {
+  filter?: ModelSubscriptionConversationUserFilterInput | null,
+};
+
+export type OnCreateConversationUserSubscription = {
+  onCreateConversationUser?:  {
+    __typename: "ConversationUser",
+    id: string,
+    conversationId: string,
+    userId: string,
+    conversation:  {
+      __typename: "Conversation",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    user:  {
+      __typename: "User",
+      id: string,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateConversationUserSubscriptionVariables = {
+  filter?: ModelSubscriptionConversationUserFilterInput | null,
+};
+
+export type OnUpdateConversationUserSubscription = {
+  onUpdateConversationUser?:  {
+    __typename: "ConversationUser",
+    id: string,
+    conversationId: string,
+    userId: string,
+    conversation:  {
+      __typename: "Conversation",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    user:  {
+      __typename: "User",
+      id: string,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteConversationUserSubscriptionVariables = {
+  filter?: ModelSubscriptionConversationUserFilterInput | null,
+};
+
+export type OnDeleteConversationUserSubscription = {
+  onDeleteConversationUser?:  {
+    __typename: "ConversationUser",
+    id: string,
+    conversationId: string,
+    userId: string,
+    conversation:  {
+      __typename: "Conversation",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
+    user:  {
+      __typename: "User",
+      id: string,
+      username?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    },
     createdAt: string,
     updatedAt: string,
   } | null,
