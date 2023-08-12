@@ -36,13 +36,17 @@ export const useAwfulPhraseManager = (
   const [awfulPhrases, setAwfulPhrases] = useState<AwfulPhrase[]>([]);
   const [latestMessage, setLatestMessage] = useState<AwfulPhrase>();
   useEffect(() => {
-    async function fetchAwfulPhrases() {
+    async function fetchAwfulPhrases(conversation: Conversation) {
+      console.log("convo id = ", conversation.id);
       const apiData = (await API.graphql({
         query: awfulPhrasesByConversationID,
+        variables: {
+          conversationID: "6895be40-01c3-4816-a2db-248e0dda890a",
+        },
       })) as GraphQLResult<any>;
-      const awfulPhrasesFromAPI = apiData.data.listAwfulPhrases
-        .items as AwfulPhrase[];
       console.log("awfulPhraseRawResult", apiData);
+      const awfulPhrasesFromAPI = apiData.data.awfulPhrasesByConversationID
+        .items as AwfulPhrase[];
       const phraseStrings = awfulPhrasesFromAPI.map((phrase: AwfulPhrase) => {
         return phrase.phrase;
       });
@@ -61,11 +65,10 @@ export const useAwfulPhraseManager = (
       },
       error: (error) => console.warn(error),
     });
-
-    fetchAwfulPhrases();
+    conversation && fetchAwfulPhrases(conversation);
 
     return () => sub.unsubscribe();
-  }, []);
+  }, [conversation]);
 
   useEffect(() => {
     latestMessage && setAwfulPhrases([...(awfulPhrases || []), latestMessage]);

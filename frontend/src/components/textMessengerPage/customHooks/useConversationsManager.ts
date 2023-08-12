@@ -9,9 +9,16 @@ import {
 } from "../../../API";
 import {
   createConversation,
+  createConversationUser,
   deleteConversation,
 } from "../../../graphql/mutations";
 import { conversationUsersByUserId } from "../../../graphql/queries";
+import { getUserConversationInfo } from "../../../graphql/conversation/queries";
+
+type ConversationData = {
+  id: string;
+  name: string;
+};
 
 /**
  * custom hook designed to manage conversations which users are a part of
@@ -38,12 +45,14 @@ export const useConversationsManager = (user: User | undefined) => {
   useEffect(() => {
     async function fetchConversations(user: User) {
       const apiData = (await API.graphql(
-        graphqlOperation(conversationUsersByUserId, {
-          userId: user.id,
+        graphqlOperation(getUserConversationInfo, {
+          id: user.id,
         })
       )) as GraphQLResult<any>;
-      const awfulPhrasesFromAPI = apiData.data.conversationUsersByUserId
-        .items as Conversation[];
+      const awfulPhrasesFromAPI = apiData.data.getUser.conversations.items.map(
+        (i: any) => i.conversation
+      ) as Conversation[];
+      // .items as Conversation[];
       console.log("convoRawResult", apiData);
       const convoNames = awfulPhrasesFromAPI.map(
         (conversation: Conversation) => {
@@ -96,15 +105,27 @@ export const useConversationsManager = (user: User | undefined) => {
       let input: CreateConversationInput = {
         name: name,
       };
-      const createConversationRes = await API.graphql({
+      const graphqlInput1 = {
         query: createConversation,
         variables: { input },
-      });
-      console.log("res from creating convo", createConversationRes);
-      const linkConvoUserInput: CreateConversationUserInput = {
-        userId: user.id,
-        conversationId: "xdlmao ", //TODO getConvoID from createConversationRes
       };
+      const createConversationRes: any = await API.graphql(graphqlInput1);
+      console.log("res from creating convo", createConversationRes);
+      if (createConversationRes.data.createConversation) {
+        const newConvo = createConversationRes.data.createConversation;
+        const linkConvoUserInput: CreateConversationUserInput = {
+          userId: user.id,
+          conversationId: newConvo.id, //TODO getConvoID from createConversationRes
+        };
+        const graphqlInput2 = {
+          query: createConversationUser,
+          variables: { input: linkConvoUserInput },
+        };
+        setConversations([...conversations, newConvo]);
+        console.log("inputs", graphqlInput1, graphqlInput2);
+        const linkRes: any = await API.graphql(graphqlInput2);
+        console.log("linkOperationRes", linkRes);
+      }
     } else {
       console.log("missing user or conversation context");
       return;

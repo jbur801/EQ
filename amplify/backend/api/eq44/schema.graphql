@@ -15,8 +15,8 @@ type User @model @auth(rules: [{allow: public}]) {
 type AwfulPhrase @model @auth(rules: [{allow: public}]) {
   id: ID!
   phrase: String!
-  userID: ID! @index(name: "byUser")
-  conversationID: ID! @index(name: "byConversation")
+  userID: ID! @index(name: "byUser", sortKeyFields: ["createdAt"])
+  conversationID: ID! @index(name: "byConversation", sortKeyFields: ["createdAt"])
   type: String! @index(name: "awfulPhrasesByDate", queryField: "awfulPhrasesByDate", sortKeyFields: ["createdAt"])
   createdAt: String!
 }
