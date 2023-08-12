@@ -41,7 +41,7 @@ export const useAwfulPhraseManager = (
       const apiData = (await API.graphql({
         query: awfulPhrasesByConversationID,
         variables: {
-          conversationID: "6895be40-01c3-4816-a2db-248e0dda890a",
+          conversationID: conversation.id,
         },
       })) as GraphQLResult<any>;
       console.log("awfulPhraseRawResult", apiData);
