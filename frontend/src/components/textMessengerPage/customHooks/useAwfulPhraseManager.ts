@@ -19,6 +19,7 @@ import {
   OnCreateAwfulPhraseSubscription,
   User,
 } from "../../../API";
+import { mostRecentConversationInsults } from "../../../graphql/conversation/queries";
 
 /**
  * custom hook designed to aid users in saying hurtful things and recieving hurtful replies
@@ -39,22 +40,23 @@ export const useAwfulPhraseManager = (
     async function fetchAwfulPhrases(conversation: Conversation) {
       console.log("convo id = ", conversation.id);
       const apiData = (await API.graphql({
-        query: awfulPhrasesByConversationID,
+        query: mostRecentConversationInsults,
         variables: {
           conversationID: conversation.id,
         },
       })) as GraphQLResult<any>;
       console.log("awfulPhraseRawResult", apiData);
-      const awfulPhrasesFromAPI = apiData.data.awfulPhrasesByConversationID
-        .items as AwfulPhrase[];
-      const phraseStrings = awfulPhrasesFromAPI.map((phrase: AwfulPhrase) => {
-        return phrase.phrase;
-      });
-      console.log("about to set", phraseStrings);
-      setAwfulPhrases(awfulPhrasesFromAPI);
+      const awfulPhrasesFromAPI = apiData.data
+        .awfulPhrasesByConversationIDAndCreatedAt.items as AwfulPhrase[];
+      //reverse result (fetch most recent, but most recent should be at the end)
+      const reversedPhrases = [];
+      for (let i = awfulPhrasesFromAPI.length; i > 0; i--) {
+        reversedPhrases.push(awfulPhrasesFromAPI[i - 1]);
+      }
+      setAwfulPhrases(reversedPhrases);
     }
 
-    // Subscribe to creation of Todo
+    // Subscribe to creation of Message
     const sub = API.graphql<
       GraphQLSubscription<OnCreateAwfulPhraseSubscription>
     >(graphqlOperation(onCreateAwfulPhrase)).subscribe({

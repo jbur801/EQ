@@ -11,7 +11,7 @@ import { API } from "aws-amplify";
 import { useDynamoUser } from "./customHooks/useDynamoUser";
 
 export default function MessengerMain() {
-  const { user: contextUser } = useDynamoUser();
+  const { user: contextUser, availableUsers } = useDynamoUser();
 
   const {
     conversations,
@@ -23,17 +23,20 @@ export default function MessengerMain() {
 
   return (
     <Card sx={{ width: "100%", height: "100%" }}>
-      <Stack flexDirection={"row"}>
+      <Stack flexDirection={"row"} spacing={2}>
         <ConversationSelector
+          contextUser={contextUser}
           conversations={conversations}
           setSelectedConversation={setSelectedConversation}
           addConversation={addConversation}
+          availableUsers={availableUsers}
         />
         {selectedConversation && contextUser && (
           <ConversationHandler
             conversation={selectedConversation}
+            setConversation={setSelectedConversation}
             contextUser={contextUser}
-            conversationUsers={/*TODO convo users*/ []}
+            conversationUsers={/*TODO convo users*/ availableUsers}
           />
         )}
       </Stack>

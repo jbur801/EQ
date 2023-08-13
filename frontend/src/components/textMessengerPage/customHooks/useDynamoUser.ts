@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { User } from "../../../API";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { API, graphqlOperation } from "aws-amplify";
-import { getUser } from "../../../graphql/queries";
+import { getUser, listUsers } from "../../../graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import { createUser } from "../../../graphql/mutations";
 
@@ -14,6 +14,7 @@ import { createUser } from "../../../graphql/mutations";
  */
 export const useDynamoUser = () => {
   const [user, setUser] = useState<User>();
+  const [availableUsers, setAvailableUsers] = useState<User[]>([]);
   const { user: cognitoUser } = useAuthenticator((context) => [context.user]);
   const get = async (user: any /*AmplifyUser*/) => {
     const userID = user.username;
@@ -48,10 +49,35 @@ export const useDynamoUser = () => {
     // console.log("found conversations:", convoNames);
     // setUser(foundUser);
   };
+
+  /**
+   * gets the avaiilable users
+   * TODO: currently gets all users in the database, trim or paginate
+   */
+  const getAvailableUsers = async () => {
+    const getRes = (await API.graphql(
+      graphqlOperation(listUsers)
+    )) as GraphQLResult<any>;
+    console.log("UsersRawResult", getRes);
+    const users = getRes.data.listUsers.items;
+    console.log("users are", users);
+    if (users) {
+      setAvailableUsers(users);
+    } else {
+      console.log("wonky donky, should retry or smth");
+    }
+  };
+
   useEffect(() => {
     console.log(user, cognitoUser);
     get(cognitoUser);
   }, [cognitoUser]);
 
-  return { user };
+  useEffect(() => {
+    if (user) {
+      getAvailableUsers();
+    }
+  }, [user]);
+
+  return { user, availableUsers };
 };

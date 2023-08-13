@@ -29,3 +29,26 @@ export const getUserConversationInfo = /* GraphQL */ `
     }
   }
 `;
+
+export const mostRecentConversationInsults = /* GraphQL */ `
+  query mostRecentConversationInsults(
+    $nextToken: String
+    $conversationID: ID!
+  ) {
+    awfulPhrasesByConversationIDAndCreatedAt(
+      conversationID: $conversationID
+      sortDirection: DESC
+      limit: 100
+      nextToken: $nextToken
+    ) {
+      items {
+        phrase
+        id
+        userID
+      }
+      nextToken
+    }
+  }
+`;
+
+

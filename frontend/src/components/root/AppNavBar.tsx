@@ -32,8 +32,8 @@ export default function AppNavBar() {
     setAnchorElNav(null);
   };
   const pages = [
-    { name: "lobby", path: "/lobby/1" },
-    { name: "Game", path: "/game/1" },
+    // { name: "lobby", path: "/lobby/1" },
+    // { name: "Game", path: "/game/1" },
     { name: "Home", path: "/" },
   ];
 
@@ -44,25 +44,23 @@ export default function AppNavBar() {
   return (
     <>
       <AppBar position="static">
-        <Container>
-          <Toolbar>
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.map((page) => (
-                <Button
-                  key={page.name}
-                  href={page.path}
-                  sx={{ my: 2, color: "white", display: "block" }}
-                >
-                  {page.name}
-                </Button>
-              ))}
-            </Box>
-            <Typography> Logged in as {user.attributes?.email}</Typography>
-            <Button onClick={() => logOut()}>
-              <LogoutIcon htmlColor={"orange"} />
-            </Button>
-          </Toolbar>
-        </Container>
+        <Toolbar>
+          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            {pages.map((page) => (
+              <Button
+                key={page.name}
+                href={page.path}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                {page.name}
+              </Button>
+            ))}
+          </Box>
+          <Typography> Logged in as {user.attributes?.email}</Typography>
+          <Button onClick={() => logOut()}>
+            <LogoutIcon htmlColor={"orange"} />
+          </Button>
+        </Toolbar>
       </AppBar>
     </>
   );

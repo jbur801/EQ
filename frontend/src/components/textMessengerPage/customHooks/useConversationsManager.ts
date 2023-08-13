@@ -100,7 +100,7 @@ export const useConversationsManager = (user: User | undefined) => {
    * @param name something unkind, I'm sure
    * @returns result of save operation
    */
-  const addConversation = async (name: string) => {
+  const addConversation = async (name: string, selectedUsers: User[]) => {
     if (user) {
       let input: CreateConversationInput = {
         name: name,
@@ -113,18 +113,21 @@ export const useConversationsManager = (user: User | undefined) => {
       console.log("res from creating convo", createConversationRes);
       if (createConversationRes.data.createConversation) {
         const newConvo = createConversationRes.data.createConversation;
-        const linkConvoUserInput: CreateConversationUserInput = {
-          userId: user.id,
-          conversationId: newConvo.id, //TODO getConvoID from createConversationRes
-        };
-        const graphqlInput2 = {
-          query: createConversationUser,
-          variables: { input: linkConvoUserInput },
-        };
+        for (let user of selectedUsers) {
+          const linkConvoUserInput: CreateConversationUserInput = {
+            userId: user.id,
+            conversationId: newConvo.id, //TODO getConvoID from createConversationRes
+          };
+          const graphqlInput2 = {
+            query: createConversationUser,
+            variables: { input: linkConvoUserInput },
+          };
+          console.log("inputs", graphqlInput1, graphqlInput2);
+          const linkRes: any = await API.graphql(graphqlInput2);
+          console.log("linkOperationRes", linkRes);
+        }
+
         setConversations([...conversations, newConvo]);
-        console.log("inputs", graphqlInput1, graphqlInput2);
-        const linkRes: any = await API.graphql(graphqlInput2);
-        console.log("linkOperationRes", linkRes);
       }
     } else {
       console.log("missing user or conversation context");
