@@ -1,24 +1,11 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormGroup,
-  FormLabel,
-  Stack,
-  TextField,
-} from "@mui/material";
+import { Avatar, Button, Card, Stack } from "@mui/material";
+import { useState } from "react";
 import {
   AwfulPhrase,
   Conversation,
   ModelAwfulPhraseConnection,
   User,
 } from "../../API";
-import { useState } from "react";
-import ModalWrapper from "../../global/helperModal/HelperModal";
 import { UglyConvoCreationModal } from "./components/UglyConvoCreationModal";
 
 interface conversationSelectorProps {
@@ -82,6 +69,7 @@ export const ConversationSelector: React.FC<conversationSelectorProps> = (
           <h1>+</h1>
         </Button>
       </Stack>
+
       <UglyConvoCreationModal
         showModal={showModal}
         setShowModal={setShowModal}

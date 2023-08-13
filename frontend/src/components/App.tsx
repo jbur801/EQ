@@ -11,6 +11,7 @@ function App() {
     //     <Route path="/" element={<h1> hello</h1>} />
     //   </Routes>
     // </BrowserRouter>
+
     <Authenticator.Provider>
       <Routes />
     </Authenticator.Provider>

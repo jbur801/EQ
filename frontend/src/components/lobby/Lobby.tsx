@@ -4,7 +4,15 @@ export default function Lobby() {
   console.log("code segment reached:lobby");
   return (
     <div>
-      <p>reee motherfucker</p>
+      <iframe
+        id="background"
+        style={{
+          position: "fixed",
+          width: "100vw",
+          height: "100vh",
+        }}
+        src={process.env.PUBLIC_URL + "/shaders/base.html"}
+      />
     </div>
   );
 }

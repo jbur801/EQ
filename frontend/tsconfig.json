@@ -19,7 +19,5 @@
       "@idk/GraphQl": ["../src/graphQl"]
     }
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src", "public/shaders/webGLTemplate.js"]
 }

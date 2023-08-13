@@ -6,7 +6,6 @@ export default function TestCanvas() {
     <Canvas>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <Test position={[-1.2, 0, 0]} />
       <Test position={[1.2, 0, 0]} />
     </Canvas>
   );

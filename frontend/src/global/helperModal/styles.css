@@ -13,6 +13,17 @@
     border-radius: 3px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
   }
+  .mobileModal {
+    position: fixed;
+    width: 300px;
+    z-index: 1040;
+    top: 25%;
+    left: 10%;
+    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  }
   
   .backdrop {
     position: fixed;

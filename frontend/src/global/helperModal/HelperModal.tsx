@@ -26,10 +26,10 @@ export default function ModalWrapper(props: PropsWithChildren<ModalProps>) {
       React.ClassAttributes<HTMLDivElement> &
       React.HTMLAttributes<HTMLDivElement>
   ) => <div className="backdrop" {...props} />;
-
+  const quickIsMobile = window.screen.width < 600;
   return (
     <Modal
-      className="modal"
+      className={quickIsMobile ? "mobileModal" : "modal"}
       show={showModal}
       onHide={handleClose}
       renderBackdrop={renderBackdrop}
