@@ -2,7 +2,7 @@
   All credit goes to this shader: https://www.shadertoy.com/view/4t3BWl
   I just made this version for a computer background
 */
-
+/*glsl*/
 const int ITERATIONS = 25;   //use less value if you need more performance
 const float SPEED = .8;
 

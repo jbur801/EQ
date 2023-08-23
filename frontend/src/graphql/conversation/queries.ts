@@ -38,7 +38,7 @@ export const mostRecentConversationInsults = /* GraphQL */ `
     awfulPhrasesByConversationIDAndCreatedAt(
       conversationID: $conversationID
       sortDirection: DESC
-      limit: 100
+      limit: 20
       nextToken: $nextToken
     ) {
       items {

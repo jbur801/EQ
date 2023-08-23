@@ -36,26 +36,51 @@ export const useAwfulPhraseManager = (
 ) => {
   const [awfulPhrases, setAwfulPhrases] = useState<AwfulPhrase[]>([]);
   const [latestMessage, setLatestMessage] = useState<AwfulPhrase>();
-  useEffect(() => {
-    async function fetchAwfulPhrases(conversation: Conversation) {
-      console.log("convo id = ", conversation.id);
-      const apiData = (await API.graphql({
-        query: mostRecentConversationInsults,
-        variables: {
-          conversationID: conversation.id,
-        },
-      })) as GraphQLResult<any>;
-      console.log("awfulPhraseRawResult", apiData);
-      const awfulPhrasesFromAPI = apiData.data
-        .awfulPhrasesByConversationIDAndCreatedAt.items as AwfulPhrase[];
-      //reverse result (fetch most recent, but most recent should be at the end)
-      const reversedPhrases = [];
-      for (let i = awfulPhrasesFromAPI.length; i > 0; i--) {
-        reversedPhrases.push(awfulPhrasesFromAPI[i - 1]);
-      }
-      setAwfulPhrases(reversedPhrases);
+  const [fullyLoaded, setFullyLoaded] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [nextToken, setNextToken] = useState<string>();
+  async function fetchAwfulPhrases(
+    conversation: Conversation,
+    givenNextToken?: string
+  ) {
+    setIsFetching(true);
+    console.log("convo id = ", conversation.id);
+    const apiData = (await API.graphql({
+      query: mostRecentConversationInsults,
+      variables: {
+        conversationID: conversation.id,
+        nextToken: givenNextToken,
+      },
+    })) as GraphQLResult<any>;
+    console.log("awfulPhraseRawResult", apiData);
+    const awfulPhrasesFromAPI = apiData.data
+      .awfulPhrasesByConversationIDAndCreatedAt.items as AwfulPhrase[];
+    //reverse result (fetch most recent, but most recent should be at the end)
+    const reversedPhrases = [];
+    for (let i = awfulPhrasesFromAPI.length; i > 0; i--) {
+      reversedPhrases.push(awfulPhrasesFromAPI[i - 1]);
     }
+    setIsFetching(false);
+    let newNextToken =
+      apiData.data.awfulPhrasesByConversationIDAndCreatedAt.nextToken;
+    console.log("new next token is", newNextToken);
+    return { phrases: reversedPhrases, nextToken: newNextToken };
+  }
+  useEffect(() => {
+    console.log("setting fullyloaded", nextToken);
+    if (nextToken) {
+      setFullyLoaded(false);
+    } else {
+      setFullyLoaded(true);
+    }
+  }, [nextToken]);
 
+  useEffect(() => {
+    async function fetchRecentMessages(conversation: Conversation) {
+      let recentMessages = await fetchAwfulPhrases(conversation);
+      setAwfulPhrases(recentMessages.phrases);
+      setNextToken(recentMessages.nextToken);
+    }
     // Subscribe to creation of Message
     const sub = API.graphql<
       GraphQLSubscription<OnCreateAwfulPhraseSubscription>
@@ -67,7 +92,7 @@ export const useAwfulPhraseManager = (
       },
       error: (error) => console.warn(error),
     });
-    conversation && fetchAwfulPhrases(conversation);
+    conversation && fetchRecentMessages(conversation);
 
     return () => sub.unsubscribe();
   }, [conversation]);
@@ -113,5 +138,32 @@ export const useAwfulPhraseManager = (
     }
   };
 
-  return { awfulPhrases, deleteMeanWords, saveAwfulPhrase };
+  /**
+   * loads more disgusting verbiage
+   * uses nextToken and conversation stored in state to get the next series of mean words,
+   * updates local state with new nextToken and updated awfulPhrases (previously fetched ones + latest fetched ones)
+   */
+  const fetchMorePhrases = async () => {
+    if (conversation && !fullyLoaded) {
+      let res = await fetchAwfulPhrases(conversation, nextToken);
+      let newMessages = res.phrases;
+      setAwfulPhrases(newMessages.concat(awfulPhrases));
+      setNextToken(res.nextToken);
+    } else {
+      if (!conversation) {
+        console.warn("trying to fetch messages in nonexistent conversation");
+      } else {
+        console.warn("trying to fetch messages after all messages are fetched");
+      }
+    }
+  };
+
+  return {
+    awfulPhrases,
+    deleteMeanWords,
+    saveAwfulPhrase,
+    isFetching,
+    fullyLoaded,
+    fetchMorePhrases,
+  };
 };

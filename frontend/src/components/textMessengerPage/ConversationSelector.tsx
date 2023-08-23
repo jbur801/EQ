@@ -1,4 +1,4 @@
-import { Avatar, Button, Card, Stack } from "@mui/material";
+import { Avatar, Button, Card, Divider, Stack } from "@mui/material";
 import { useState } from "react";
 import {
   AwfulPhrase,
@@ -29,45 +29,50 @@ export const ConversationSelector: React.FC<conversationSelectorProps> = (
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <Card sx={{ width: "100%", height: "80vh" }}>
-      <Stack>
-        {conversations.map((convo) => {
-          const phraseConnection =
-            convo.AwfulPhrases as ModelAwfulPhraseConnection;
-          const phraseItems = phraseConnection.items as AwfulPhrase[];
-          let phraserName = "unknown";
-          let phrase: string | undefined;
-          if (phraseItems && phraseItems.length > 0) {
-            const phraserID = phraseItems[0].userID;
-            phrase = phraseItems[0].phrase;
-            const possiblePhraserName = availableUsers.find(
-              (user) => user.id === phraserID
-            )?.username;
-            possiblePhraserName && (phraserName = possiblePhraserName);
-          }
+    <div style={{ width: "100%", height: "100%" }}>
+      <Stack divider={<Divider orientation="horizontal" flexItem />}>
+        <Stack direction={"row"}>
+          <h1>Conversations</h1>
+          <Button onClick={() => setShowModal(true)}>
+            <h1>+ Add</h1>
+          </Button>
+        </Stack>
+        <div style={{ overflowY: "auto", height: "100%" }}>
+          {conversations.map((convo) => {
+            const phraseConnection =
+              convo.AwfulPhrases as ModelAwfulPhraseConnection;
+            const phraseItems = phraseConnection.items as AwfulPhrase[];
+            let phraserName = "unknown";
+            let phrase: string | undefined;
+            if (phraseItems && phraseItems.length > 0) {
+              const phraserID = phraseItems[0].userID;
+              phrase = phraseItems[0].phrase;
+              const possiblePhraserName = availableUsers.find(
+                (user) => user.id === phraserID
+              )?.username;
+              possiblePhraserName && (phraserName = possiblePhraserName);
+            }
 
-          return (
-            <Card
-              sx={{ margin: 1, background: "light grey" }}
-              onClick={() => setSelectedConversation(convo)}
-            >
-              <Stack flexDirection={"row"} alignItems={"center"} spacing={2}>
-                <Avatar sx={{ width: 80, height: 80 }}>placeholder</Avatar>
-                <Stack>
-                  <h2 style={{ margin: 0 }}>{convo.name}:</h2>
-                  {phrase && (
-                    <p>
-                      {phraserName}:{phrase}
-                    </p>
-                  )}
+            return (
+              <Card
+                sx={{ padding: 0, margin: 0, background: "" }}
+                onClick={() => setSelectedConversation(convo)}
+              >
+                <Stack flexDirection={"row"} alignItems={"center"} spacing={2}>
+                  <Avatar sx={{ width: 80, height: 80 }}>placeholder</Avatar>
+                  <Stack>
+                    <h2 style={{ margin: 0 }}>{convo.name}:</h2>
+                    {phrase && (
+                      <p>
+                        {phraserName}:{phrase}
+                      </p>
+                    )}
+                  </Stack>
                 </Stack>
-              </Stack>
-            </Card>
-          );
-        })}
-        <Button onClick={() => setShowModal(true)}>
-          <h1>+</h1>
-        </Button>
+              </Card>
+            );
+          })}
+        </div>
       </Stack>
 
       <UglyConvoCreationModal
@@ -76,6 +81,6 @@ export const ConversationSelector: React.FC<conversationSelectorProps> = (
         availableUsers={availableUsers}
         addConversation={addConversation}
       />
-    </Card>
+    </div>
   );
 };

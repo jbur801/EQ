@@ -1,4 +1,4 @@
-import { Card, Stack } from "@mui/material";
+import { Card, Divider, Stack } from "@mui/material";
 import { ConversationHandler } from "./ConversationHandler";
 import { ConversationSelector } from "./ConversationSelector";
 import { useConversationsManager } from "./customHooks/useConversationsManager";
@@ -19,7 +19,11 @@ export default function MessengerMain() {
 
   return (
     <Card sx={{ width: "100%", height: "100%" }}>
-      <Stack flexDirection={"row"} spacing={2}>
+      <Stack
+        flexDirection={"row"}
+        spacing={2}
+        divider={<Divider orientation="vertical" flexItem />}
+      >
         {(!quickIsMobile || !selectedConversation) && (
           <ConversationSelector
             contextUser={contextUser}
