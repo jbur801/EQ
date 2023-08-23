@@ -24,8 +24,14 @@ export const ConversationHandler: React.FC<conversationHandlerProps> = (
   const scrollToBottom = () => {
     bottomEl?.current?.scrollIntoView({ behavior: "smooth" });
   };
-  const { awfulPhrases, deleteMeanWords, saveAwfulPhrase } =
-    useAwfulPhraseManager(contextUser, conversation);
+  const {
+    awfulPhrases,
+    deleteMeanWords,
+    saveAwfulPhrase,
+    fullyLoaded,
+    fetchMorePhrases,
+    isFetching,
+  } = useAwfulPhraseManager(contextUser, conversation);
 
   const save = () => {
     if (stringName !== "") {
@@ -44,11 +50,11 @@ export const ConversationHandler: React.FC<conversationHandlerProps> = (
 
   useEffect(() => {
     scrollToBottom();
-  }, [awfulPhrases]);
+  }, []);
 
   return (
     // <Container sx={{ width: "100vw", height: "100vh", bgcolor: "black" }}>
-    <Card
+    <div
       style={{
         width: "100%",
         height: "100%",
@@ -68,31 +74,32 @@ export const ConversationHandler: React.FC<conversationHandlerProps> = (
           <h1>{conversation.name}</h1>
         </Stack>
         <Card sx={{ width: "95%", height: "90%" }}>
-          <Stack
-            alignItems={"end"}
-            spacing={1}
-            overflow={"auto"}
-            height={"65vh"}
-            justifyContent={"end"}
-          >
-            {awfulPhrases.map((awfulPhrase) => {
-              return (
-                // <div key={awfulPhrase.id}>
-                //   <>{awfulPhrase.phrase}</>
-                //   <Button onClick={() => deleteMeanWords(awfulPhrase)}>
-                //     {" "}
-                //     delete
-                //   </Button>
-                // </div>
-                <Message
-                  contextUser={contextUser}
-                  message={awfulPhrase}
-                  conversationUsers={conversationUsers}
-                />
-              );
-            })}
-            <div ref={bottomEl}></div>
-          </Stack>
+          <div style={{ overflowY: "scroll", height: "100%" }}>
+            <Stack
+              spacing={1}
+              height={"100%"}
+              alignItems={"flex-end"}
+              justifyContent={"right"}
+            >
+              {fullyLoaded ? (
+                <div style={{ height: "30vh" }}> no more stuff to load</div>
+              ) : isFetching ? (
+                <>currently fetching stuff</>
+              ) : (
+                <Button onClick={fetchMorePhrases}> fetch more stuff </Button>
+              )}
+              {awfulPhrases.map((awfulPhrase) => {
+                return (
+                  <Message
+                    contextUser={contextUser}
+                    message={awfulPhrase}
+                    conversationUsers={conversationUsers}
+                  />
+                );
+              })}
+              <div ref={bottomEl}></div>
+            </Stack>
+          </div>
         </Card>
         <div style={{ display: "flex", flexDirection: "row", width: "100%" }}>
           <div style={{ width: "100%" }}>
@@ -117,7 +124,7 @@ export const ConversationHandler: React.FC<conversationHandlerProps> = (
           </Button>
         </div>
       </Stack>
-    </Card>
+    </div>
 
     // </Container>
   );
