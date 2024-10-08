@@ -17,6 +17,8 @@ import KysPage from "../components/kysPage/KysPage";
 import { Login } from "../components/Auth/Login";
 import { RequireAuth } from "../components/Auth/RequireAuth";
 import MessengerMain from "../components/textMessengerPage/MessengerMain";
+import WheelOfTodo from "../components/WheelOfTodo/WheelOfTodo";
+import Canvas from "../components/thing/canvasBoilerplate";
 
 export default function Routes() {
   // const router = createBrowserRouter(
@@ -53,7 +55,11 @@ export default function Routes() {
         },
         {
           path: "game/:lobbyId",
-          element: <Game />,
+          element: <Canvas />,
+        },
+        {
+          path: "todo",
+          element: <WheelOfTodo />,
         },
         {
           path: "createlobby",

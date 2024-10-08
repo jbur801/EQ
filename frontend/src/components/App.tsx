@@ -11,10 +11,13 @@ function App() {
     //     <Route path="/" element={<h1> hello</h1>} />
     //   </Routes>
     // </BrowserRouter>
+    <div id='app' style={{width:'100%',height:'100%', overflow:'hidden'}}>
 
     <Authenticator.Provider>
       <Routes />
     </Authenticator.Provider>
+          
+    </div>
   );
 }
 
