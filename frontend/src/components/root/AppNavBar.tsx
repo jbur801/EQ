@@ -42,8 +42,8 @@ export default function AppNavBar() {
     navigate("/login");
   }
   return (
-      <AppBar position="static" sx={{height:'10vh'}}>
-        <Toolbar >
+      <AppBar position="static" sx={{height:'4vh'}}>
+        <Toolbar style={{height:'100%', minHeight:'0'}}>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button

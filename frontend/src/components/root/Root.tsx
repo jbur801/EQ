@@ -5,7 +5,7 @@ export default function Root() {
   return (
     <div style={{ width: "100vw", height: "100vh", overflow:'none' }} >
       <AppNavBar />
-      <div id="detail" style={{ width: "100%", height: "90%" }}>
+      <div id="detail" style={{ width: "100%", height: "96%" }}>
         <Outlet />
       </div>
     </div>

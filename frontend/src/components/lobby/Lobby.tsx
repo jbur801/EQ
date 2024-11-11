@@ -2,7 +2,7 @@ import { Box, Button, Slider } from "@mui/material";
 import { assert } from "console";
 import { initial } from "lodash";
 import React, { useEffect, useRef, useState } from "react";
-import ShitBox from "./Box";
+import ShitBox, { pos } from "./Box";
 
 const vertexShader = ` attribute vec2 a_position;
  
@@ -184,6 +184,17 @@ export default function Lobby() {
 
 
   },[boxes])
+
+  const getMousePos = (event:MouseEvent,canvasRef:React.MutableRefObject<any>):pos|null=>{
+    const canvas = canvasRef.current;
+    if(!canvas){
+      return null
+    }
+    let rect = canvas.getBoundingClientRect();
+    let x = event.clientX - rect.left;
+    let y = event.clientY - rect.top;
+    return  {x,y}
+  }
   const beginLoop = (attLocations:AttLocations)=>{
     if(!attLocations){
       console.log('mother of fuck')
@@ -376,7 +387,7 @@ requestAnimationFrame(()=>doIteration(attLocations,t,texCoordBuffer!,texCoordLoc
     // </div>
     <div style={{border:4}}>
 
-    <canvas style={{background:'green',height:'100%',width:'100%'}} ref={canvasRef}>
+    <canvas style={{background:'green',height:'70%',width:'85%'}} ref={canvasRef}>
 
     </canvas>
     <Button onClick={()=>activeRef.current=false}>OFF</Button>

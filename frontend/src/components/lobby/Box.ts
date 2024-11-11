@@ -1,4 +1,4 @@
-type pos = {x:number,y:number}
+export type pos = {x:number,y:number}
 type Bounds = {minX:number,minY:number,maxX:number,maxY:number}
 
 export default class ShitBox {

@@ -1,0 +1,201 @@
+.stats {
+    display: flex;
+    flex-wrap: wrap
+}
+
+.stats__tile {
+    flex-basis: 31.833333%;
+    background: hsla(0,0%,100%,.15);
+    margin: .7% .7%;
+    padding: 10px 0;
+    border-radius: 4px
+}
+
+.stats__tile__label {
+    text-align: center;
+    font-size: .7rem
+}
+
+.stats__tile__value {
+    text-align: center;
+    font-size: 1.3rem
+}
+
+.stats__tile__value__icon {
+    display: inline-block;
+    vertical-align: text-bottom;
+    margin-bottom: 2px;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-color: #fff
+}
+
+.stats__tile__value__icon--power {
+    -webkit-mask-image: url(./images/icons/sword.svg);
+    mask-image: url(./images/icons/sword.svg);
+    width: 19px;
+    height: 19px
+}
+
+.stats__tile__value__icon--durability {
+    -webkit-mask-image: url(./images/icons/shield.svg);
+    mask-image: url(./images/icons/shield.svg);
+    width: 22px;
+    height: 22px
+}
+
+.stats__tile__value__icon--life {
+    -webkit-mask-image: url(./images/icons/heart.svg);
+    mask-image: url(./images/icons/heart.svg);
+    width: 20px;
+    height: 20px
+}
+
+.stats__tile__value__icon--speed {
+    -webkit-mask-image: url(./images/icons/thunder.svg);
+    mask-image: url(./images/icons/thunder.svg);
+    width: 12px;
+    height: 18px
+}
+
+.stats__tile--solo {
+    padding: 10px 0
+}
+
+.effect {
+    font-size: .85rem;
+    white-space: pre-wrap
+}
+
+.effect__bubble {
+    background: rgba(0,0,0,.8);
+    padding: 2px 6px;
+    margin-right: 2px;
+    left: -4px;
+    position: relative;
+    border-radius: 10px
+}
+
+.effect__bubble--yellow {
+    color: #000;
+    background: #e6d24b
+}
+
+.effect__edition-hover {
+    cursor: pointer
+}
+
+.effect__correction {
+    color: orange;
+    font-weight: 700
+}
+
+.effect__label {
+    font-weight: 700
+}
+
+.effect__reminder {
+    font-style: italic
+}
+
+.effect__icon {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    vertical-align: text-top;
+    background-position: 50%;
+    background-size: 13px;
+    margin: 0 2px;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-position: center;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    background-color: #fff
+}
+
+.effect__icon--sword {
+    -webkit-mask-image: url(./images/icons/sword.svg);
+    mask-image: url(./images/icons/sword.svg)
+}
+
+.effect__icon--heart {
+    -webkit-mask-image: url(./images/icons/heart.svg);
+    mask-image: url(./images/icons/heart.svg)
+}
+
+.effect__icon--rest {
+    background-repeat: no-repeat;
+    background-color: transparent;
+    background-image: url(./images/icons/rest.png);
+    vertical-align: top;
+    background-size: 26px;
+    width: 30px;
+    height: 18px;
+    margin: 0
+}
+
+.attribute-list__title[data-v-469164c5] {
+    text-transform: uppercase;
+    font-size: .55rem;
+    color: hsla(0,0%,100%,.5)
+}
+
+.attribute-list__thema[data-v-469164c5] {
+    cursor: pointer
+}
+
+.attribute-list__thema[data-v-469164c5]:hover {
+    color: #fff
+}
+
+.attribute-table[data-v-469164c5] {
+    font-size: .85rem
+}
+
+.attribute-table td[data-v-469164c5],.attribute-table tr[data-v-469164c5]:first-child {
+    border-top: none
+}
+
+.attribute-table tr[data-v-469164c5] {
+    border-top: 1px solid #444
+}
+
+.rule[data-v-469164c5] {
+    border-bottom: 1px solid #505050;
+    margin-bottom: 10px
+}
+
+.rule__title[data-v-469164c5] {
+    text-transform: uppercase;
+    font-size: .75rem
+}
+
+.rule__date[data-v-469164c5] {
+    font-size: .75rem
+}
+
+.rule[data-v-469164c5]:last-child {
+    border-bottom: none;
+    margin-bottom: 0
+}
+
+.thema[data-v-469164c5] {
+    text-align: center
+}
+
+.thema__hide-button[data-v-469164c5] {
+    text-transform: uppercase;
+    font-size: .8rem;
+    color: hsla(0,0%,100%,.5);
+    cursor: pointer
+}
+
+.thema__options[data-v-469164c5] {
+    width: 100%
+}
